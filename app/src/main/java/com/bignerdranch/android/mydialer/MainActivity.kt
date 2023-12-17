@@ -22,8 +22,8 @@ data class Wrapper(val contacts : ArrayList<Contact>)
 class MainActivity : AppCompatActivity() {
     private val URL = "https://drive.google.com/u/0/uc?id=1-KO-9GA3NzSgIc1dkAsNm8Dqw0fuPxcR&export=download"
     private val okHttpClient : OkHttpClient = OkHttpClient()
-    private var arrayContacts : Array<Contact> = arrayOf()
-    private var rviewContacts : Array<Contact> = arrayOf()
+    private var arrayContacts : MutableList<Contact> = mutableListOf()
+    private var rviewContacts : MutableList<Contact> = mutableListOf()
     private lateinit var recyclerView : RecyclerView
     private lateinit var buttonSrch : Button
     private lateinit var editText : EditText
@@ -52,23 +52,23 @@ class MainActivity : AppCompatActivity() {
 
         buttonSrch.setOnClickListener() {
             if (editText.text.toString() != "") {
-                arrayContacts.toMutableList().clear()
+                arrayContacts.clear()
 
                 for (i in 0 .. rviewContacts.size - 1) {
                     if (rviewContacts[i].name.contains(editText.text.toString(), ignoreCase = true) ||
                         rviewContacts[i].phone.contains(editText.text.toString(), ignoreCase = true) ||
                         rviewContacts[i].type.contains(editText.text.toString(), ignoreCase = true)) {
 
-                        arrayContacts.toMutableList().add(rviewContacts[i])
+                        arrayContacts.add(rviewContacts[i])
                     }
                 }
 
                 recyclerView.adapter?.notifyDataSetChanged()
             } else {
-                arrayContacts.toMutableList().clear()
+                arrayContacts.clear()
 
                 for (i in 0 .. rviewContacts.size - 1) {
-                    arrayContacts.toMutableList().add(rviewContacts[i])
+                    arrayContacts.add(rviewContacts[i])
                 }
 
                 recyclerView.adapter?.notifyDataSetChanged()
@@ -89,7 +89,7 @@ class MainActivity : AppCompatActivity() {
             Timber.d("Contact type", arrayContacts[i].type)
         }
 
-        rviewContacts = arrayContacts.clone()
+        rviewContacts = arrayContacts.toMutableList()
 
         runOnUiThread() {
             recyclerView.layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)

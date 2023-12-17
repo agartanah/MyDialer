@@ -11,7 +11,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 
-class RecycleAdapter(private val context: Context, private val contacts: Array<Contact>) : RecyclerView.Adapter<RecycleAdapter.ViewHolder>() {
+class RecycleAdapter(private val context: Context, private val contacts: MutableList<Contact>) : RecyclerView.Adapter<RecycleAdapter.ViewHolder>() {
     class ViewHolder (itemView: View) : RecyclerView.ViewHolder (itemView) {
         var name : TextView = itemView.findViewById(R.id.textName)
         var phone : TextView = itemView.findViewById(R.id.textPhone)
